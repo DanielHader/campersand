@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+
+\usepackage{mathtools}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{tcolorbox}
+
+\DeclarePairedDelimiter{\enc}{[\![}{]\!]}
+
+\newcommand{\prov}{\text{Prov}}
+\newcommand{\PA}{\texttt{PA}}
+
+\newtheorem{theorem}{Theorem}
+
+\title{Incompleteness\\\large C\&! 2025}
+\author{Daniel Hader}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section{First order logic}
+	
+	First order logic is, in a very real sense, a programming language for mathematics
+	
+	\subsection{Universe of discourse}
+	\subsection{Model theory}
+	\subsubsection{Predicates}
+	\subsubsection{Functions}	
+	\subsubsection{Relations}
+	
+	Equality axioms
+	
+	\begin{itemize}
+		\item $\forall x (x = x)$
+		\item $\forall x, y (x=y \to y=x)$
+		\item $\forall x, y, z (((x=y) \land (y=z)) \to (z=z))$
+	\end{itemize}
+	
+	\section{Peano Arithmetic}
+	
+	\subsection{Axioms of Peano arithmetic}
+	In addition to the axioms of FOL, Peano arithmetic introduces:
+	
+	The signature of \PA includes the following symbols:
+	\begin{itemize}
+		\item $0$ a constant or 0-ary function, to be interpreted as zero,
+		\item $S$ a 1-ary function, to be interpreted as succession,
+		\item $+$ a 2-ary function, to be interpreted as addition, and
+		\item $\cdot$ a 2-ary function, to be interpreted as multiplication,
+		\item $\le$ a 2-ary relation, to be interpreted as no greater than,
+	\end{itemize}
+	
+	Notice that we typically define $+$ and $\cdot$ to be written in infix notation, that is in-between its operands, but we could just as well write $+(x, y)$ or $\cdot(x, y)$ to mean the same thing if you're worried about a more concise grammar.
+	
+	Additionally PA includes the following axioms
+	
+	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Successor axioms}]
+		\begin{itemize}
+			\item $\forall x, y ((S(x)=S(y)) \to (x=y))$
+			\item $\forall x (\lnot (S(x)=0))$ 
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Addition axioms}]
+		\begin{itemize}
+			\item $\forall x (x+0 = x)$
+			\item $\forall x, y (x+S(y) = S(x+y))$
+			\item $\forall x, y (x+y=y+x)$ (redundant)
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Multiplication axioms}]
+		\begin{itemize}
+			\item $\forall x (x+0 = x)$
+			\item $\forall x, y (x+S(y) = S(x+y))$
+			\item $\forall x, y (x+y=y+x)$ (redundant)
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Inequality axioms}]
+		TODO
+	\end{tcolorbox}
+	
+		
+	\section{Encodings}
+	\section{The provability predicate}
+	\section{The Incompleteness Theorems}
+	
+	\begin{theorem}[The first incompleteness theorem]
+		There exists a sentence $S$ in the language of Peano arithmetic with neither $S$ nor $\lnot S$ provable in PA.
+	\end{theorem}
+
+	\begin{theorem}[The second incompleteness theorem]
+		Let $C$ be the sentence $\lnot\prov(\enc{0=1})$, then neither $C$ nor $\lnot C$ has a proof in PA.		
+	\end{theorem}
+
+	\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=TODO]
+		intuitive descriptions
+	\end{tcolorbox}
+
+	The above theorems are true in more general cases, any superset of PA, but essentially any theory capable of constructing the provability predicate is sufficient.
+	
+\end{document}
