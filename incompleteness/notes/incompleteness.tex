@@ -1,19 +1,21 @@
 \documentclass[12pt]{article}
 
 \usepackage{mathtools}
-
+\usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{amsthm}
 
 \usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\newtcbtheorem{theorem}{Theorem}{colback=blue!5!white,colframe=blue!60!white,fonttitle=\bfseries}{thm}
+\newtcbtheorem{definition}{Definition}{colback=black!5!white,colframe=black!60!white,fonttitle=\bfseries}{def}
+
 
 \DeclarePairedDelimiter{\enc}{[\![}{]\!]}
 
 \newcommand{\prov}{\text{Prov}}
 \newcommand{\PA}{\texttt{PA}}
-
-\newtheorem{theorem}{Theorem}
 
 \title{Incompleteness\\\large C\&! 2025}
 \author{Daniel Hader}
@@ -24,11 +26,37 @@
 	
 	\section{First order logic}
 	
-	First order logic is, in a very real sense, a programming language for mathematics
+	% Add the fluff later
 	
-	\subsection{Universe of discourse}
-	\subsection{Model theory}
+	First order logic, FOL from here, is a \emph{formal system} where \emph{formal} refers to symbolic form, not some notion of rigor.
+	
+	In FOL we describe a \emph{theory} using \emph{axioms} given in some precise language. Proof theory and model theory offer two different approaches to understanding these theories. In model theory, one tries to construct explicit mathematical objects that are described by the theory and hence which satisfy the axioms. In proof theory, the axioms are used as clues to reason about the objects in the theory more generally. 
+	
+	\subsection{Languages and Theories}
+	
+	\begin{definition}{Formal language}
+		A \emph{formal language} is simply a collection of words made up from a fixed set of symbols called the \emph{alphabet}. 
+	\end{definition}
+	
+	\noindent Examples include:
+	\begin{itemize}[itemsep=0pt]
+		\item the primes in base 10 $\{2, 3, 5, 7, 11, 13, \ldots \}$ over $\{0,1,2,3,4,5,6,7,8,9\}$
+		\item the whole numbers written in English $\{\text{one},\text{two},\text{three},\text{four},\ldots\}$
+		\item All Minecraft seeds that cause the player to spawn in the desert
+	\end{itemize}
+	
+	\noindent The language of FOL includes the following symbols
+	
+	\noindent In FOL we make \emph{formulas} using 
+	
+	\subsubsection{Domain of discourse}
+	
+	A theory
+	
 	\subsubsection{Predicates}
+	
+	Predicates describe \emph{yes} or \emph{no} questions that we might ask about an object in our theory
+	
 	\subsubsection{Functions}	
 	\subsubsection{Relations}
 	
@@ -90,11 +118,11 @@
 	\section{The provability predicate}
 	\section{The Incompleteness Theorems}
 	
-	\begin{theorem}[The first incompleteness theorem]
+	\begin{theorem}{First incompleteness theorem}
 		There exists a sentence $S$ in the language of Peano arithmetic with neither $S$ nor $\lnot S$ provable in PA.
 	\end{theorem}
 
-	\begin{theorem}[The second incompleteness theorem]
+	\begin{theorem}{Second incompleteness theorem}
 		Let $C$ be the sentence $\lnot\prov(\enc{0=1})$, then neither $C$ nor $\lnot C$ has a proof in PA.		
 	\end{theorem}
 
