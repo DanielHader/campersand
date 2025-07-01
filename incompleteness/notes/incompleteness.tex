@@ -2,6 +2,7 @@
 
 \usepackage{mathtools}
 \usepackage{enumitem}
+\usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
 
@@ -34,7 +35,7 @@
 	
 	\subsection{Languages and Theories}
 	
-	\begin{definition}{Formal language}
+	\begin{definition}{Formal language}{}
 		A \emph{formal language} is simply a collection of words made up from a fixed set of symbols called the \emph{alphabet}. 
 	\end{definition}
 	
@@ -62,11 +63,13 @@
 	
 	Equality axioms
 	
-	\begin{itemize}
-		\item $\forall x (x = x)$
-		\item $\forall x, y (x=y \to y=x)$
-		\item $\forall x, y, z (((x=y) \land (y=z)) \to (z=z))$
-	\end{itemize}
+	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Axioms of equality}]
+		\begin{itemize}[itemsep=0pt]
+			\item $\forall x (x = x)$
+			\item $\forall x, y (x=y \to y=x)$
+			\item $\forall x, y, z (((x=y) \land (y=z)) \to (z=z))$
+		\end{itemize}
+	\end{tcolorbox}
 	
 	\section{Peano Arithmetic}
 	
@@ -116,13 +119,34 @@
 		
 	\section{Encodings}
 	\section{The provability predicate}
+	
+	\begin{definition}{The provability predicate}{}
+		The provability predicate $\prov(n)$ is defined to be true when $n$ is the encoding $\enc{S}$ of some provable sentence $S$ in PA, and false otherwise.
+	\end{definition}
+	
+	It's not at all clear that the provability predicate can even be defined in PA, but it can be owing to the power of encoding.
+	
 	\section{The Incompleteness Theorems}
 	
-	\begin{theorem}{First incompleteness theorem}
+	\begin{theorem}{First incompleteness theorem}{}
 		There exists a sentence $S$ in the language of Peano arithmetic with neither $S$ nor $\lnot S$ provable in PA.
 	\end{theorem}
 
-	\begin{theorem}{Second incompleteness theorem}
+	The proof of this theorem is very simple:
+	
+	\begin{proof}
+		Let $R$ be a 2-ary relation defined so that $R(n,m)$ is true if and only if all of the following are satisfied:
+		\begin{enumerate}[itemsep=0pt]
+			\item $m$ is the encoding of some formula $F(x)$ with a single free variable $x$
+			\item $n$ is the encoding of a proof of $F(m)$
+		\end{enumerate}
+		
+		\noindent Now let $G$ be the formula $G(x) = \forall y (\lnot R(y, x))$ where $x$ is a free variable.
+		
+		The godel sentence is $G(\enc{G})$ 
+	\end{proof}
+
+	\begin{theorem}{Second incompleteness theorem}{}
 		Let $C$ be the sentence $\lnot\prov(\enc{0=1})$, then neither $C$ nor $\lnot C$ has a proof in PA.		
 	\end{theorem}
 
