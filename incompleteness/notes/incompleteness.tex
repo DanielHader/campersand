@@ -1,10 +1,11 @@
-\documentclass[12pt]{article}
+\documentclass[10pt]{article}
 
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{todonotes}
 
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems}
@@ -12,11 +13,14 @@
 \newtcbtheorem{theorem}{Theorem}{colback=blue!5!white,colframe=blue!60!white,fonttitle=\bfseries}{thm}
 \newtcbtheorem{definition}{Definition}{colback=black!5!white,colframe=black!60!white,fonttitle=\bfseries}{def}
 
-
+\DeclareMathSymbol{:}{\mathord}{operators}{"3A}
 \DeclarePairedDelimiter{\enc}{[\![}{]\!]}
 
+\newcommand{\type}[1]{\texttt{#1}}
 \newcommand{\prov}{\text{Prov}}
 \newcommand{\PA}{\texttt{PA}}
+
+\newcommand{\N}{\mathbb{N}}
 
 \title{Incompleteness\\\large C\&! 2025}
 \author{Daniel Hader}
@@ -33,22 +37,62 @@
 	
 	In FOL we describe a \emph{theory} using \emph{axioms} given in some precise language. Proof theory and model theory offer two different approaches to understanding these theories. In model theory, one tries to construct explicit mathematical objects that are described by the theory and hence which satisfy the axioms. In proof theory, the axioms are used as clues to reason about the objects in the theory more generally. 
 	
-	\subsection{Languages and Theories}
+	\todo{define or explain theory}
 	
-	\begin{definition}{Formal language}{}
-		A \emph{formal language} is simply a collection of words made up from a fixed set of symbols called the \emph{alphabet}. 
+	\subsection{Terms}
+	
+	\begin{definition}{Domain of Discourse}{}
+		A {\bf domain} or {\bf universe} of discourse is the collection of mathematical objects our theory is concerned with.
 	\end{definition}
 	
-	\noindent Examples include:
-	\begin{itemize}[itemsep=0pt]
-		\item the primes in base 10 $\{2, 3, 5, 7, 11, 13, \ldots \}$ over $\{0,1,2,3,4,5,6,7,8,9\}$
-		\item the whole numbers written in English $\{\text{one},\text{two},\text{three},\text{four},\ldots\}$
-		\item All Minecraft seeds that cause the player to spawn in the desert
-	\end{itemize}
+	\noindent
+	Common universes include $\N$ the natural numbers in theories of arithmetic (the domain we will be concerned with here) and the universe of all sets in set theories.
+	More complex theories may have different types of objects in their domains.
+	For instance a theory might contain both vector spaces and pairs of vector spaces as objects of concern.
 	
-	\noindent The language of FOL includes the following symbols
+	\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title={\bf Hope someone asks about it}]
+		Why aren't domains the same things as sets?
+	\end{tcolorbox}
 	
-	\noindent In FOL we make \emph{formulas} using 
+	
+	\begin{definition}{Variable symbols}{}
+		A {\bf variable symbol} is any of a collection of symbols used to abstractly represent an element of our domain of discourse.
+	\end{definition}
+	
+	\noindent 
+	Variable symbols might include the likes of $x$, $y$, or $z$, along with sub- or super-scripted versions like $x_{100}$ or $y^n$, so long as we make it clear which symbols are variable symbols.
+	We may imagine that we have as many variables as we need or infinitely many, which ever is conceptually easier.
+	
+	\begin{definition}{Function symbols}{}
+		A {\bf $k$-ary function symbol} is any of a collection of symbols used to abstractly represent a function from $k$ objects in the universe to one object in the universe.
+	\end{definition}
+
+	\noindent
+	The \emph{arity} of a function is how many things it applies to.
+	Together, these allow us to define terms.
+	
+	\begin{definition}{Terms}{}
+		A {\bf term} is one of the following:
+		\begin{itemize}[noitemsep,topsep=0pt]
+			\item a variable symbol or
+			\item the symbolic application $f(t_1,\ldots,t_n)$ of a $k$-ary function symbol $f$ to terms $t_1,\ldots,t_k$
+		\end{itemize}
+	\end{definition}
+
+	\noindent
+	A term is intended to represent an object in the domain of discourse.
+	Notice that symbolic function application is a \emph{formal} operation denoted by a function symbol $f$ before a term or comma separated list of terms surrounded by parentheses.
+	This notation is more or less arbitrary.
+	
+	The next important concept is that of \emph{formulas}.
+	These are defined inductively, like terms, from simple forms of other objects and smaller formula.
+	
+	\begin{definition}{Formulas}{}
+		A {\bf forumla} of arity-$k$ is denoted with the type specifier $\type{F}^k$ is anything which matches any of the following patterns:
+		\begin{itemize}[itemsep=0pt]
+			\item none
+		\end{itemize}
+	\end{definition}
 	
 	\subsubsection{Domain of discourse}
 	
