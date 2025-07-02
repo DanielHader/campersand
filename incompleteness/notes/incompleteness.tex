@@ -77,8 +77,8 @@
 	\begin{definition}{Terms}{}
 		A {\bf term} is one of the following:
 		\begin{itemize}[noitemsep,topsep=0pt]
-			\item a variable symbol or
-			\item the symbolic application $f(t_1,\ldots,t_n)$ of a $k$-ary function symbol $f$ to terms $t_1,\ldots,t_k$
+			\item a variable symbol $v:V$, or
+			\item the symbolic application $f(t_1,\ldots,t_n)$ of an $n$-ary function symbol $f:\type{F}^n$ to terms $t_1:\type{T},\ldots,t_n:\type{T}$
 		\end{itemize}
 	\end{definition}
 
@@ -89,26 +89,23 @@
 	
 	\subsection{Formula}
 	
+	\begin{definition}{Predicate symbols}{}
+		An {\bf $n$-ary predicate symbol}, denoted by the type $\type{P}^n$, represents  statement about terms.
+	\end{definition}
+
+	\noindent
+	Examples include predicates asking if a natural number is prime.
+	
 	The next important concept is that of \emph{formulas}.
 	These are defined inductively, like terms, from simple forms of other objects and smaller formula.
 	
 	\begin{definition}{Formulas}{}
 		A {\bf forumla} of arity-$k$ is denoted with the type specifier $\type{F}^k$ is anything which matches any of the following patterns:
 		\begin{itemize}[itemsep=0pt]
-			\item none
+			\item The symbolic application $P(t_1,\ldots,t_n)$ of an $n$-ary predicate symbol $P:\type{P}^n$ to terms $t_1:\type{T},\ldots,t_n:\type{T}$
 		\end{itemize}
 	\end{definition}
 	
-	\subsubsection{Domain of discourse}
-	
-	A theory
-	
-	\subsubsection{Predicates}
-	
-	Predicates describe \emph{yes} or \emph{no} questions that we might ask about an object in our theory
-	
-	\subsubsection{Functions}	
-	\subsubsection{Relations}
 	
 	Equality axioms
 	
