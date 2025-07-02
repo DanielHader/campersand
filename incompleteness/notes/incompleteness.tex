@@ -1,5 +1,8 @@
 \documentclass[10pt]{article}
 
+\usepackage{fitch}
+\usepackage{bussproofs}
+
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{amsthm}
@@ -84,6 +87,8 @@
 	Notice that symbolic function application is a \emph{formal} operation denoted by a function symbol $f$ before a term or comma separated list of terms surrounded by parentheses.
 	This notation is more or less arbitrary.
 	
+	\subsection{Formula}
+	
 	The next important concept is that of \emph{formulas}.
 	These are defined inductively, like terms, from simple forms of other objects and smaller formula.
 	
@@ -108,13 +113,25 @@
 	Equality axioms
 	
 	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Axioms of equality}]
-		\begin{itemize}[itemsep=0pt]
-			\item $\forall x (x = x)$
-			\item $\forall x, y (x=y \to y=x)$
-			\item $\forall x, y, z (((x=y) \land (y=z)) \to (z=z))$
-		\end{itemize}
+		\begin{enumerate}[itemsep=0pt, label={E.\arabic*}]
+			\item $\forall x. (x = x)$ \label{ax:eq-refl}
+			\item $\forall x. \forall y. (x=y \to y=x)$ \label{ax:eq-sym}
+			\item $\forall x. \forall y. \forall z. (((x=y) \land (y=z)) \to (z=z))$ \label{ax:eq-trans} 
+			\item $\forall x. \forall y. (x = y) \to (\phi(\dots,x,\ldots) \to \phi(\ldots,y,\ldots))$ \hfill $\phi:F$
+		\end{enumerate}
 	\end{tcolorbox}
+
+	\noindent
 	
+	For the last equality axiom, we really would like to say something like:
+	$$\forall \phi. \forall x. \forall y. (x = y) \to (\phi(\dots,x,\ldots) \to \phi(\ldots,y,\ldots))$$
+	but this is impossible in FOL since quantifiers only act over objects in our universe.
+	Higher order logics give you some ability to do this, but in FOL we can skirt this problem by using an \emph{axiom schema}.
+	We interpret the last axiom. not as 1 axiom, but rather an infinite list of axioms, one for each formula $\phi$ with at least 1 free variable and where the $x$ and $y$ are plugged into every possible free variable of $\phi$.
+	
+	It doesn't particularly matter that we couldn't technically write all of the axioms.
+	Instead it's okay so long as there's an algorithmic way to construct the sequence of characters defining the axiom.
+	 
 	\section{Peano Arithmetic}
 	
 	\subsection{Axioms of Peano arithmetic}
@@ -134,33 +151,53 @@
 	Additionally PA includes the following axioms
 	
 	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Successor axioms}]
-		\begin{itemize}
-			\item $\forall x, y ((S(x)=S(y)) \to (x=y))$
-			\item $\forall x (\lnot (S(x)=0))$ 
-		\end{itemize}
+		\begin{enumerate}[label=S.\arabic*]
+			\item $\forall x, y ((S(x)=S(y)) \to (x=y))$ \label{ax:succ-inj}
+			\item $\forall x (\lnot (S(x)=0))$ \label{ax:succ-first}
+		\end{enumerate}
 	\end{tcolorbox}
 	
 	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Addition axioms}]
-		\begin{itemize}
-			\item $\forall x (x+0 = x)$
-			\item $\forall x, y (x+S(y) = S(x+y))$
-			\item $\forall x, y (x+y=y+x)$ (redundant)
-		\end{itemize}
+		\begin{enumerate}[label=A.\arabic*]
+			\item $\forall x (x+0 = x)$ \label{ax:add-id}
+			\item $\forall x, y (x+S(y) = S(x+y))$ \label{ax:add-succ}
+			\item $\forall x, y (x+y=y+x)$ (redundant) \label{ax:add-sym}
+		\end{enumerate}
 	\end{tcolorbox}
 	
 	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Multiplication axioms}]
-		\begin{itemize}
-			\item $\forall x (x+0 = x)$
-			\item $\forall x, y (x+S(y) = S(x+y))$
-			\item $\forall x, y (x+y=y+x)$ (redundant)
-		\end{itemize}
+		
 	\end{tcolorbox}
 	
 	\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Inequality axioms}]
 		TODO
 	\end{tcolorbox}
 	
+	\section{Proof system}
+	
+	Here we introduce a proof system called \emph{natural deduction} which is designed to formally mimic the form of natural language proofs in mathematics.
+	
+	Let's try and prove the following:
+	
+	\begin{theorem}{}{}
+		$1 + 1 = 2$, or in the language of PA
 		
+		$$S(0) + S(0) = S(S(0))$$
+	\end{theorem}
+	
+	\noindent
+	First we have to formalize this statement in the language of PA:
+	
+	\[\begin{nd}
+		\have {1} {\forall x. \forall y. (x + S(y) = S(x+y))} \by{Axiom~\ref{ax:add-succ}}{}
+		\have {2} {\forall y. (S(0) + S(y) = S(S(0) + y)} \by{$\forall_E [x \mapsto S(0)]$}{1}
+		\have {3} {S(0) + S(0) = S(S(0)+0)}\by{$\forall_E [y \mapsto 0]$}{2}
+		\have {4} {\forall x. (x + 0 = x)} \by{Axiom~\ref{ax:add-id}}{}
+		\have {5} {S(0)+0 = S(0)}\by{$\forall_E [x \mapsto S(0)]$}{4}
+		\have {6} {}
+		
+	\end{nd}\]
+	
 	\section{Encodings}
 	\section{The provability predicate}
 	
