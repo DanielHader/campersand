@@ -2,3 +2,4 @@
 *.log
 *.gz
 *.pdf
+__pycache__
