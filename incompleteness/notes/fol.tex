@@ -1,0 +1,96 @@
+\section{First order logic}
+
+% Add the fluff later
+
+First order logic, FOL from here, is a \emph{formal system} where \emph{formal} refers to symbolic form, not some notion of rigor.
+
+In FOL we describe a \emph{theory} using \emph{axioms} given in some precise language. Proof theory and model theory offer two different approaches to understanding these theories. In model theory, one tries to construct explicit mathematical objects that are described by the theory and hence which satisfy the axioms. In proof theory, the axioms are used as clues to reason about the objects in the theory more generally. 
+
+\todo{define or explain theory}
+
+\subsection{Terms}
+
+\begin{definition}{Domain of Discourse}{}
+	A {\bf domain} or {\bf universe} of discourse is the collection of mathematical objects our theory is concerned with.
+\end{definition}
+
+\noindent
+Common universes include $\N$ the natural numbers in theories of arithmetic (the domain we will be concerned with here) and the universe of all sets in set theories.
+More complex theories may have different types of objects in their domains.
+For instance a theory might contain both vector spaces and pairs of vector spaces as objects of concern.
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title={\bf Hope someone asks about it}]
+	Why aren't domains the same things as sets?
+\end{tcolorbox}
+
+
+\begin{definition}{Variable symbols}{}
+	A {\bf variable symbol} is any of a collection of symbols used to abstractly represent an element of our domain of discourse.
+\end{definition}
+
+\noindent 
+Variable symbols might include the likes of $x$, $y$, or $z$, along with sub- or super-scripted versions like $x_{100}$ or $y^n$, so long as we make it clear which symbols are variable symbols.
+We may imagine that we have as many variables as we need or infinitely many, which ever is conceptually easier.
+
+\begin{definition}{Function symbols}{}
+	A {\bf $k$-ary function symbol} is any of a collection of symbols used to abstractly represent a function from $k$ objects in the universe to one object in the universe.
+\end{definition}
+
+\noindent
+The \emph{arity} of a function is how many things it applies to.
+Together, these allow us to define terms.
+
+\begin{definition}{Terms}{}
+	A {\bf term} is one of the following:
+	\begin{itemize}[noitemsep,topsep=0pt]
+		\item a variable symbol $v:V$, or
+		\item the symbolic application $f(t_1,\ldots,t_n)$ of an $n$-ary function symbol $f:\type{F}^n$ to terms $t_1:\type{T},\ldots,t_n:\type{T}$
+	\end{itemize}
+\end{definition}
+
+\noindent
+A term is intended to represent an object in the domain of discourse.
+Notice that symbolic function application is a \emph{formal} operation denoted by a function symbol $f$ before a term or comma separated list of terms surrounded by parentheses.
+This notation is more or less arbitrary.
+
+\subsection{Formula}
+
+\begin{definition}{Predicate symbols}{}
+	An {\bf $n$-ary predicate symbol}, denoted by the type $\type{P}^n$, represents  statement about terms.
+\end{definition}
+
+\noindent
+Examples include predicates asking if a natural number is prime.
+
+The next important concept is that of \emph{formulas}.
+These are defined inductively, like terms, from simple forms of other objects and smaller formula.
+
+\begin{definition}{Formulas}{}
+	A {\bf forumla} of arity-$k$ is denoted with the type specifier $\type{F}^k$ is anything which matches any of the following patterns:
+	\begin{itemize}[itemsep=0pt]
+		\item The symbolic application $P(t_1,\ldots,t_n)$ of an $n$-ary predicate symbol $P:\type{P}^n$ to terms $t_1:\type{T},\ldots,t_n:\type{T}$
+	\end{itemize}
+\end{definition}
+
+
+Equality axioms
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title={\bf Axioms of equality}]
+	\begin{enumerate}[itemsep=0pt, label={E.\arabic*}]
+		\item $\forall x. (x = x)$ \label{ax:eq-refl}
+		\item $\forall x. \forall y. (x=y \to y=x)$ \label{ax:eq-sym}
+		\item $\forall x. \forall y. \forall z. (((x=y) \land (y=z)) \to (z=z))$ \label{ax:eq-trans} 
+		\item $\forall x. \forall y. (x = y) \to (\phi(\dots,x,\ldots) \to \phi(\ldots,y,\ldots))$ \hfill $\phi:F$
+	\end{enumerate}
+\end{tcolorbox}
+
+\noindent
+
+For the last equality axiom, we really would like to say something like:
+$$\forall \phi. \forall x. \forall y. (x = y) \to (\phi(\dots,x,\ldots) \to \phi(\ldots,y,\ldots))$$
+but this is impossible in FOL since quantifiers only act over objects in our universe.
+Higher order logics give you some ability to do this, but in FOL we can skirt this problem by using an \emph{axiom schema}.
+We interpret the last axiom. not as 1 axiom, but rather an infinite list of axioms, one for each formula $\phi$ with at least 1 free variable and where the $x$ and $y$ are plugged into every possible free variable of $\phi$.
+
+It doesn't particularly matter that we couldn't technically write all of the axioms.
+Instead it's okay so long as there's an algorithmic way to construct the sequence of characters defining the axiom.

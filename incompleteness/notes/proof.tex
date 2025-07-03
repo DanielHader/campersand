@@ -1,0 +1,182 @@
+
+In this section we discuss a proof system called \textbf{natural deduction} and explore it in the context of both propositional and first order logic.
+The following is a proof of a statement in propositional logic using natural deduction in the notation of Suppes and Lemmon.
+Consider its parts, try to understand them, and compare them to a what you think a good written proof should look like.
+
+\medskip
+
+\begin{center}
+	\begin{lproof}{Proof: $(A\to(B\to C)) \to ((A\land B)\to C)$}
+		\pline{1}{Assume}{1}{A\to(B\to C)}{}
+		\pline{2}{Assume}{2}{A\land B}{}
+		\pline{3}{$\land$Elim$_1$ 2}{2}{A}{}
+		\pline{4}{$\land$Elim$_2$ 2}{2}{B}{}
+		\pline{5}{$\to$Elim 3,1}{1,2}{B\to C}{}
+		\pline{6}{$\to$Elim 4,5}{1,2}{C}{}
+		\pline{7}{$\to$Intro 2,6}{1}{(A\land B)\to C}{}
+		\hline
+		\pline{8}{$\to$Intro 1,7}{}{(A\to(B\to C)) \to ((A\land B)\to C)}{}
+	\end{lproof}
+\end{center}
+
+\subsection{Propositional Logic}
+
+In propositional logic, we are concerned with {\bf propositions}, statements about the world like ``Today is Wednesday'' or ``The Intel 8080 CPU was released in 1974''.
+These may be combined using {\bf connectives} to yield {\bf formula}.
+
+\begin{definition}{Propositional Formula}{}
+	In propositional logic, a {\bf formula} matches one of the following patterns:
+	\begin{itemize}[noitemsep, topsep=0pt]
+		\item a proposition $A:\type{Prop}$,
+		\item the {\bf negation} of a formula $\lnot (A:\type{Form})$,
+		\item the {\bf conjunction} of two formula $(A:\type{Form}) \land (B:\type{Form})$,
+		\item the {\bf disjunction} of two formula $(A:\type{Form}) \lor (B:\type{Form})$,
+		\item an {\bf implication} between two formula $(A:\type{Form})\to(B:\type{Form})$,	
+\end{itemize}
+\end{definition}
+
+Additionally, we define a special symbol
+
+\begin{definition}{Top and bottom}{}
+	The special symbol $\bot$, sometimes called {\bf bottom} or {\bf false}, denotes a contradiction.
+\end{definition}
+
+There is a corresponding symbol $\top$, called {\bf top} or {\bf true}, denoting a statement that is tautologically true.
+This symbol is much less useful than $\bot$ in propositional logic, we probably wont see it much more. Also, not all authors even choose to include $\bot$ or $\top$ as symbols in propositional logic, they're an optional feature.
+It's analogous to the concept of {\bf syntactic sugar} in programming.
+We can avoid $\bot$ ($\top$) all together by replacing any instance of $\bot$ ($\top$) with an explicitly contradictory (tautological) formula like $A\land \lnot A$ ($A \lor \lnot A$).
+The resulting logic system is identical.
+
+\begin{discuss}{}{}
+	What makes $A \land \lnot A$ a contradictory formula? What about $A \lor \lnot A$?
+	What does this say about the nature of a proposition's truth value? 
+\end{discuss}
+
+\todo{discuss explosion at some point} 
+
+\subsection{Natural Deduction}
+
+Now that we understand the notation of propositional logic, lets explore the rules for writing {\bf proofs}.
+In propositional logic, and indeed in most any logic, proof systems are understand to be symbolic pattern matching games whose rules somehow reflect valid modes of reasoning.
+In other words, what one is allowed to write in each line of a proof is constrained by a set of rules to enforce logical validity. The following rules are to be understood as pattern templates.
+\todo{explain this dork}
+
+\paragraph{Assumption} is the simplest rule, you simply assume a proposition as a premise.
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title={\bf Conjunction Rules}]
+	\centering
+	\begin{lproof}{Assumption}
+		\hline
+		\pline{$i$}{Assume}{$i$}{A:\type{Form}}{}
+	\end{lproof}
+\end{tcolorbox}
+
+From nothing this proof rule allows you to assume any formula $A$, but notice how the line number of the assumption was added to the {\bf assumption list}.
+Any line with a formula constructed using this assumption will inherit that entry in their assumption list with one major exception involving implication that will be discussed soon.
+
+\paragraph{Conjunction} or the ``and'' connective is defined by the following rules which formally represent exactly what you'd expect of an symbol for ``and''.
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title={\bf Conjunction Rules}]
+	\centering
+	\begin{lproof}{And introduction}
+		\pline{$i$}{}{$i_1,\ldots,i_m$}{A:\type{Form}}{}
+		\pline{$j$}{}{$j_1,\ldots,j_n$}{B:\type{Form}}{}
+		\hline
+		\pline{$k$}{$\land$Intro $i,j$}{$i_1,\ldots,i_m,j_1,\ldots,j_n$}{(A\land B):\type{Form}}{}
+	\end{lproof}
+	
+	\tcblower
+	
+	\begin{lproof}{And elimination left}
+		\pline{$i$}{}{$i_1,\ldots,i_m$}{(A\land B):\type{Form}}{}
+		\hline
+		\pline{$j$}{$\land$Elim$_1$ $i$}{$i_1,\ldots,i_m$}{A:\type{Form}}{}
+	\end{lproof}
+	\hfill
+	\begin{lproof}{And elimination right}
+		\pline{$i$}{}{$i_1,\ldots,i_m$}{(A\land B):\type{Form}}{}
+		\hline
+		\pline{$j$}{$\land$Elim$_2$ $i$}{$i_1,\ldots,i_m$}{B:\type{Form}}{}
+	\end{lproof}
+\end{tcolorbox}
+
+\paragraph{Disjunction} or the ``or'' connective is defined similarly.
+Compare these rules to those of conjunction.
+If you're bothered by the awkwardness of the elimination rule, there are alternative proof systems like Gentzen's sequent calculus whose rules are more symmetric at the cost of some additional complexity.
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title={\bf Disjunction Rules}]
+	\begin{lproof}{Or introduction left}
+		\pline{$i$}{}{$i_1,\ldots,i_m$}{A:\type{F}}{}
+		\hline
+		\pline{$j$}{$\lor$Intro$_1$ $i$}{$i_1,\ldots,i_m$}{(A\lor B):\type{F}}{}
+	\end{lproof}
+	\hfill
+	\begin{lproof}{Or introduction right}
+		\pline{$i$}{}{$i_1,\ldots,i_m$}{B:\type{F}}{}
+		\hline
+		\pline{$j$}{$\lor$Intro$_2$ $i$}{$i_1,\ldots,i_m$}{(A\lor B):\type{F}}{}
+	\end{lproof}
+	
+	\tcblower
+	
+	\centering
+	\begin{lproof}{Or elimination}
+		\pline{$i$}{}{$i_1,\ldots,i_m$}{(A\lor B):\type{F}}{}
+		\pline{$j$}{}{$j_1,\ldots,j_n$}{(A\to C):\type{F}}{}
+		\pline{$k$}{}{$k_1,\ldots,k_o$}{(B\to C):\type{F}}{}
+		\hline
+		\pline{$l$}{$\lor$E}{$i_1,\ldots,i_m,j_1,\ldots,j_n,k_1,\ldots,k_o$}{C:\type{F}}{}
+	\end{lproof}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title={\bf Implication Rules}]
+	\begin{lproof}{Implication Introduction}
+		\pline{$i$}{Assume}{}{A:\type{F}}{}
+		\pline{$j$}{}{$i$}{B:\type{F}}{}
+		\hline
+		\pline{$k$}{$\to$I}{$i$, $j$}{A\to B:\type{F}}{}
+	\end{lproof}
+	\hfill
+	\begin{lproof}{Implication Elimination}
+		\pline{$i$}{}{}{A:\type{F}}{}
+		\pline{$j$}{}{}{A\to B:\type{F}}{}
+		\hline
+		\pline{$k$}{$\to$E}{$i$, $j$}{B:\type{F}}{}
+	\end{lproof}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title={\bf Negation Rules}]
+	Negation is understood to mean implying a contradiction:
+	$$\lnot A \equiv A\to\bot$$
+	
+	\tcblower
+	
+	\begin{lproof}{Double negation elimination}
+		\pline{$i$}{}{}{\lnot\lnot A:\type{F}}{}
+		\hline
+		\pline{$j$}{DNE}{$i$}{A:\type{F}}{}
+	\end{lproof}
+	\hfill
+	\begin{lproof}{Reductio ad absurdum}
+		\pline{$i$}{}{}{A:\type{F}}{}
+		\pline{$j$}{}{$i$}{\bot:\type{P}^0}
+		\hline
+		\pline{$k$}{RAA}{$i$, $j$}{\lnot A:\type{F}}{}
+	\end{lproof}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title={\bf Negation Rules}]
+	\begin{lproof}{Negation Introduction}
+		\pline{$i$}{Assume}{}{A:\type{F}}{}
+		\pline{$j$}{}{$i$}{B:\type{F}}{}
+		\hline
+		\pline{$k$}{$\to$I}{$i$, $j$}{A\to B:\type{F}}{}
+	\end{lproof}
+	\hfill
+	\begin{lproof}{Implication Elimination}
+		\pline{$i$}{}{}{A:\type{F}}{}
+		\pline{$j$}{}{}{A\to B:\type{F}}{}
+		\hline
+		\pline{$k$}{$\to$E}{$i$, $j$}{B:\type{F}}{}
+	\end{lproof}
+\end{tcolorbox}
